@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import Recipeitem from "../../component/recipe-item/Recipeitem";
 import FavoriteItem from "../../component/favorite-item/FavoriteItem";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Search from "../../component/search/Search";
 import "./style.css";
+import Navbar from "../navbar/Navbar";
 
 const Homepage = () => {
   const [loadingstate, setLoadingState] = useState(false);
@@ -12,12 +14,14 @@ const Homepage = () => {
 
   const [favorites, setFavorites] = useState([]);
 
+  const [apicallsuccess, setApicallsuccess] = useState(false);
+
   const getdata = (data) => {
     setLoadingState(true);
     // console.log(data, "data is here");
     const getrecipy = async () => {
       const responce = await fetch(
-        `https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_API_KEE}&query=${data}&number=50`
+        `https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_API_KEE}&query=${data}&number=20`
       );
       const result = await responce.json();
       const { results } = result;
@@ -25,6 +29,7 @@ const Homepage = () => {
       if (results && results.length > 0) {
         setLoadingState(false);
         setRecipes(results);
+        setApicallsuccess(true);
       }
     };
     getrecipy();
@@ -59,7 +64,7 @@ const Homepage = () => {
     copyfav = copyfav.filter((item) => item.id !== curritemid);
     setFavorites(copyfav);
     localStorage.setItem("favorites", JSON.stringify(copyfav));
-    console.log(copyfav);
+    // console.log(copyfav);
   };
   // console.log(favorites);
   useEffect(() => {
@@ -77,23 +82,11 @@ const Homepage = () => {
 
   return (
     <div className="homepage">
-      <Search getdata={getdata} />
-
-      <div className="favorites-wrapper">
-        <h1 className="favorites-title">Favorites</h1>
-        <div className="favorites">
-          {favorites && favorites.length > 0
-            ? favorites.map((item) => (
-                <FavoriteItem
-                  key={item.id}
-                  removefavitem={() => removefavitem(item.id)}
-                  image={item.image}
-                  title={item.title}
-                />
-              ))
-            : null}
-        </div>
-      </div>
+      <Search
+        getdata={getdata}
+        apicallsuccess={apicallsuccess}
+        setApicallsuccess={setApicallsuccess}
+      />
 
       {/* loading content */}
 
@@ -101,18 +94,38 @@ const Homepage = () => {
         <div className="loading"> Loading recipes ! please wait</div>
       )}
 
-      <div className="items">
-        {recipes && recipes.length > 0
-          ? recipes.map((item) => (
-              <Recipeitem
-                addtofavorite={() => addtofavorite(item)}
-                key={item.id}
-                image={item.image}
-                title={item.title}
+      <BrowserRouter>
+        <Navbar />
+
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <div className="items">
+                {recipes && recipes.length > 0
+                  ? recipes.map((item) => (
+                      <Recipeitem
+                        addtofavorite={() => addtofavorite(item)}
+                        key={item.id}
+                        image={item.image}
+                        title={item.title}
+                      />
+                    ))
+                  : null}
+              </div>
+            }
+          />
+          <Route
+            path="/favorite"
+            element={
+              <FavoriteItem
+                favorites={favorites}
+                removefavitem={removefavitem}
               />
-            ))
-          : null}
-      </div>
+            }
+          />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 };
