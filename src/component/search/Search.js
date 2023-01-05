@@ -31,7 +31,7 @@ const Search = (props) => {
         value={inputvalue}
         placeholder="search recipes"
         id="search"
-        autocomplete="off"
+        autoComplete="off"
       />
       <button type="submit">Search</button>
     </form>

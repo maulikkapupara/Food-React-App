@@ -26,3 +26,12 @@
   border-color: #fa6400;
   cursor: pointer;
 }
+.items {
+  display: flex;
+  gap: 70px;
+  margin-bottom: 30px;
+  margin-top: 20vh;
+  justify-content: center;
+  flex-wrap: wrap;
+  color: #ffffff;
+}
