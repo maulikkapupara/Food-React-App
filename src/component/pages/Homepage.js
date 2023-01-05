@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import Recipeitem from "../../component/recipe-item";
-import FavoriteItem from "../../component/favorite-item";
+import Recipeitem from "../../component/recipe-item/Recipeitem";
+import FavoriteItem from "../../component/favorite-item/FavoriteItem";
 
-import Search from "../../component/search";
+import Search from "../../component/search/Search";
 import "./style.css";
 
 const Homepage = () => {
