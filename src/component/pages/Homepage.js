@@ -21,7 +21,7 @@ const Homepage = () => {
     // console.log(data, "data is here");
     const getrecipy = async () => {
       const responce = await fetch(
-        `https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_API_KEE}&query=${data}&number=20`
+        `https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_API_KEY}&query=${data}&number=20`
       );
       const result = await responce.json();
       const { results } = result;
@@ -82,37 +82,33 @@ const Homepage = () => {
 
   return (
     <div className="homepage">
-      <Search
-        getdata={getdata}
-        apicallsuccess={apicallsuccess}
-        setApicallsuccess={setApicallsuccess}
-      />
-
-      {/* loading content */}
-
-      {loadingstate && (
-        <div className="loading"> Loading recipes ! please wait</div>
-      )}
-
       <BrowserRouter>
         <Navbar />
-
+        <Search
+          getdata={getdata}
+          apicallsuccess={apicallsuccess}
+          setApicallsuccess={setApicallsuccess}
+        />
         <Routes>
           <Route
             path="/"
             element={
-              <div className="items">
-                {recipes && recipes.length > 0
-                  ? recipes.map((item) => (
-                      <Recipeitem
-                        addtofavorite={() => addtofavorite(item)}
-                        key={item.id}
-                        image={item.image}
-                        title={item.title}
-                      />
-                    ))
-                  : null}
-              </div>
+              <>
+                <h1 className="recipe-title">Welcome to Food World</h1>
+
+                <div className="items">
+                  {recipes && recipes.length > 0
+                    ? recipes.map((item) => (
+                        <Recipeitem
+                          addtofavorite={() => addtofavorite(item)}
+                          key={item.id}
+                          image={item.image}
+                          title={item.title}
+                        />
+                      ))
+                    : null}
+                </div>
+              </>
             }
           />
           <Route
@@ -126,6 +122,12 @@ const Homepage = () => {
           />
         </Routes>
       </BrowserRouter>
+
+      {/* loading content */}
+
+      {loadingstate && (
+        <div className="loading"> Loading recipes ! please wait</div>
+      )}
     </div>
   );
 };
