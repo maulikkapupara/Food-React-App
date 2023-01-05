@@ -12,12 +12,14 @@ const Homepage = () => {
 
   const [favorites, setFavorites] = useState([]);
 
+  const [apicallsuccess, setApicallsuccess] = useState(false);
+
   const getdata = (data) => {
     setLoadingState(true);
     // console.log(data, "data is here");
     const getrecipy = async () => {
       const responce = await fetch(
-        `https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_API_KEE}&query=${data}&number=50`
+        `https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_API_KEE}&query=${data}&number=20`
       );
       const result = await responce.json();
       const { results } = result;
@@ -25,6 +27,7 @@ const Homepage = () => {
       if (results && results.length > 0) {
         setLoadingState(false);
         setRecipes(results);
+        setApicallsuccess(true);
       }
     };
     getrecipy();
@@ -77,7 +80,11 @@ const Homepage = () => {
 
   return (
     <div className="homepage">
-      <Search getdata={getdata} />
+      <Search
+        getdata={getdata}
+        apicallsuccess={apicallsuccess}
+        setApicallsuccess={setApicallsuccess}
+      />
 
       <div className="favorites-wrapper">
         <h1 className="favorites-title">Favorites</h1>
