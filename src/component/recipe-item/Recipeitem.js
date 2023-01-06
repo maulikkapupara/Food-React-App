@@ -1,8 +1,14 @@
 import "./Recipeitem.css";
 import Search from "../search/Search";
 const Recipeitem = (props) => {
-  const { recipes, addtofavorite, getdata, apicallsuccess, setApicallsuccess } =
-    props;
+  const {
+    recipes,
+    addtofavorite,
+    getdata,
+    apicallsuccess,
+    setApicallsuccess,
+    loadingstate,
+  } = props;
   return (
     <>
       <Search
@@ -11,6 +17,11 @@ const Recipeitem = (props) => {
         setApicallsuccess={setApicallsuccess}
       />
       <h1 className="recipe-title">Welcome to Food World</h1>
+      {/* loading content */}
+
+      {loadingstate && (
+        <div className="loading"> Loading recipes ! please wait</div>
+      )}
       <div className="items">
         {recipes && recipes.length > 0
           ? recipes.map((item) => (
