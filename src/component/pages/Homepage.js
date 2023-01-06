@@ -3,7 +3,6 @@ import Recipeitem from "../../component/recipe-item/Recipeitem";
 import FavoriteItem from "../../component/favorite-item/FavoriteItem";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import Search from "../../component/search/Search";
 import "./style.css";
 import Navbar from "../navbar/Navbar";
 
@@ -84,31 +83,18 @@ const Homepage = () => {
     <div className="homepage">
       <BrowserRouter>
         <Navbar />
-        <Search
-          getdata={getdata}
-          apicallsuccess={apicallsuccess}
-          setApicallsuccess={setApicallsuccess}
-        />
+
         <Routes>
           <Route
             path="/"
             element={
-              <>
-                <h1 className="recipe-title">Welcome to Food World</h1>
-
-                <div className="items">
-                  {recipes && recipes.length > 0
-                    ? recipes.map((item) => (
-                        <Recipeitem
-                          addtofavorite={() => addtofavorite(item)}
-                          key={item.id}
-                          image={item.image}
-                          title={item.title}
-                        />
-                      ))
-                    : null}
-                </div>
-              </>
+              <Recipeitem
+                recipes={recipes}
+                addtofavorite={addtofavorite}
+                getdata={getdata}
+                apicallsuccess={apicallsuccess}
+                setApicallsuccess={setApicallsuccess}
+              />
             }
           />
           <Route
