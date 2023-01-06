@@ -1,4 +1,4 @@
-import "./style.css";
+import "./FavoriteItem.css";
 const FavoriteItem = (props) => {
   const { removefavitem, favorites } = props;
   return (

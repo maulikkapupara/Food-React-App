@@ -3,7 +3,6 @@ import Recipeitem from "../../component/recipe-item/Recipeitem";
 import FavoriteItem from "../../component/favorite-item/FavoriteItem";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import Search from "../../component/search/Search";
 import "./style.css";
 import Navbar from "../navbar/Navbar";
 
@@ -21,7 +20,7 @@ const Homepage = () => {
     // console.log(data, "data is here");
     const getrecipy = async () => {
       const responce = await fetch(
-        `https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_API_KEE}&query=${data}&number=20`
+        `https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_API_KEY}&query=${data}&number=20`
       );
       const result = await responce.json();
       const { results } = result;
@@ -82,18 +81,6 @@ const Homepage = () => {
 
   return (
     <div className="homepage">
-      <Search
-        getdata={getdata}
-        apicallsuccess={apicallsuccess}
-        setApicallsuccess={setApicallsuccess}
-      />
-
-      {/* loading content */}
-
-      {loadingstate && (
-        <div className="loading"> Loading recipes ! please wait</div>
-      )}
-
       <BrowserRouter>
         <Navbar />
 
@@ -101,18 +88,13 @@ const Homepage = () => {
           <Route
             path="/"
             element={
-              <div className="items">
-                {recipes && recipes.length > 0
-                  ? recipes.map((item) => (
-                      <Recipeitem
-                        addtofavorite={() => addtofavorite(item)}
-                        key={item.id}
-                        image={item.image}
-                        title={item.title}
-                      />
-                    ))
-                  : null}
-              </div>
+              <Recipeitem
+                recipes={recipes}
+                addtofavorite={addtofavorite}
+                getdata={getdata}
+                apicallsuccess={apicallsuccess}
+                setApicallsuccess={setApicallsuccess}
+              />
             }
           />
           <Route
@@ -126,6 +108,12 @@ const Homepage = () => {
           />
         </Routes>
       </BrowserRouter>
+
+      {/* loading content */}
+
+      {loadingstate && (
+        <div className="loading"> Loading recipes ! please wait</div>
+      )}
     </div>
   );
 };

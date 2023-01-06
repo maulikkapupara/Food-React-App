@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import "./style.css";
+import "./Search.css";
 
 const Search = (props) => {
   const { getdata, apicallsuccess, setApicallsuccess } = props;
@@ -22,7 +22,7 @@ const Search = (props) => {
       setInputValue("");
       setApicallsuccess(false);
     }
-  }, [apicallsuccess]);
+  }, [apicallsuccess,  setApicallsuccess]);
   return (
     <form onSubmit={handleSubmit} className="Search">
       <input
