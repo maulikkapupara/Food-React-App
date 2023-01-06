@@ -20,7 +20,7 @@ const Homepage = () => {
     // console.log(data, "data is here");
     const getrecipy = async () => {
       const responce = await fetch(
-        `https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_API_KEY}&query=${data}&number=20`
+        `https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_API_KEE}&query=${data}&number=20`
       );
       const result = await responce.json();
       const { results } = result;
