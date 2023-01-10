@@ -9,7 +9,7 @@ const Navbar = () => {
         Home
       </Link>
 
-      <Link className="item" to="/favorite">favorite</Link>
+      <Link className="item" to="/favorite">Favorite</Link>
     </div>
   );
 };
